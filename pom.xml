@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2018 The OpenTracing Authors
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+    in compliance with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software distributed under the License
+    is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+    or implied. See the License for the specific language governing permissions and limitations under
+    the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.opentracing.contrib</groupId>
+  <artifactId>opentracing-spring-jaeger-parent</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <modules>
+    <module>opentracing-spring-jaeger-autoconfigure</module>
+    <module>opentracing-spring-jaeger-autoconfigure-it</module>
+  </modules>
+  <packaging>pom</packaging>
+
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>OpenTracing Spring Boot Starter for Jaeger</description>
+  <url>https://github.com/opentracing-contrib/java-spring-jaeger</url>
+
+  <scm>
+    <url>https://github.com/opentracing-contrib/java-spring-jaeger</url>
+    <connection>scm:git:https://github.com/opentracing-contrib/java-spring-jaeger.git</connection>
+    <developerConnection>scm:git:https://github.com/opentracing-contrib/java-spring-jaeger.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <inceptionYear>2018</inceptionYear>
+
+  <developers>
+    <developer>
+      <id>opentracing</id>
+      <name>OpenTracing Gitter</name>
+      <url>https://gitter.im/opentracing/public</url>
+    </developer>
+  </developers>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <main.basedir>${project.basedir}</main.basedir>
+
+    <version.io.opentracing>0.31.0</version.io.opentracing>
+    <version.org.springframework.boot>1.5.12.RELEASE</version.org.springframework.boot>
+    <version.jaeger>0.27.0</version.jaeger>
+    <version.org.awaitility-awaitility>3.0.0</version.org.awaitility-awaitility>
+    <version.test-containers>1.7.3</version.test-containers>
+
+    <!-- plugins -->
+    <version.maven-compiler-plugin>3.6.2</version.maven-compiler-plugin>
+    <version.maven-deploy-plugin>2.8.2</version.maven-deploy-plugin>
+    <version.maven-license-plugin>3.0</version.maven-license-plugin>
+    <version.maven-release-plugin>2.5.3</version.maven-release-plugin>
+    <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
+    <version.maven-surefire-plugin>2.20</version.maven-surefire-plugin>
+    <version.maven-javadoc-plugin>3.0.0</version.maven-javadoc-plugin>
+    <version.maven-checkstyle-plugin>2.17</version.maven-checkstyle-plugin>
+    <version.checkstyle>8.3</version.checkstyle>
+    <version.io.takari-maven>0.3.4</version.io.takari-maven>
+    <version.io.zikin.centralsync-maven-plugin>0.1.0</version.io.zikin.centralsync-maven-plugin>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>opentracing-spring-jaeger-autoconfigure</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.opentracing</groupId>
+        <artifactId>opentracing-api</artifactId>
+        <version>${version.io.opentracing}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentracing</groupId>
+        <artifactId>opentracing-noop</artifactId>
+        <version>${version.io.opentracing}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentracing</groupId>
+        <artifactId>opentracing-mock</artifactId>
+        <version>${version.io.opentracing}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentracing</groupId>
+        <artifactId>opentracing-util</artifactId>
+        <version>${version.io.opentracing}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jaegertracing</groupId>
+        <artifactId>jaeger-core</artifactId>
+        <version>${version.jaeger}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${version.org.springframework.boot}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <distributionManagement>
+    <repository>
+      <id>bintray</id>
+      <url>https://api.bintray.com/maven/opentracing/maven/opentracing-spring-cloud/;publish=1</url>
+    </repository>
+    <snapshotRepository>
+      <id>jfrog-snapshots</id>
+      <url>http://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.mycila</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <version>${version.maven-license-plugin}</version>
+        </plugin>
+        <!-- mvn -N io.takari:maven:wrapper -Dmaven=3.5.0 -->
+        <plugin>
+          <groupId>io.takari</groupId>
+          <artifactId>maven</artifactId>
+          <version>${version.io.takari-maven}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${version.maven-checkstyle-plugin}</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${version.checkstyle}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>validate</id>
+            <phase>validate</phase>
+            <configuration>
+              <configLocation>config/checkstyle/checkstyle.xml</configLocation>
+              <encoding>UTF-8</encoding>
+              <consoleOutput>true</consoleOutput>
+              <failsOnError>true</failsOnError>
+              <failOnViolation>true</failOnViolation>
+              <linkXRef>false</linkXRef>
+              <includeTestSourceDirectory>true</includeTestSourceDirectory>
+            </configuration>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>${version.maven-release-plugin}</version>
+        <configuration>
+          <useReleaseProfile>false</useReleaseProfile>
+          <releaseProfiles>release</releaseProfiles>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <tagNameFormat>@{project.version}</tagNameFormat>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.zipkin.centralsync-maven-plugin</groupId>
+        <artifactId>centralsync-maven-plugin</artifactId>
+        <version>${version.io.zikin.centralsync-maven-plugin}</version>
+        <configuration>
+          <subject>opentracing</subject>
+          <repo>maven</repo>
+          <packageName>opentracing-spring-jaeger</packageName>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <version>${version.maven-license-plugin}</version>
+        <configuration>
+          <header>${main.basedir}/header.txt</header>
+          <failIfMissing>true</failIfMissing>
+          <failIfUnknown>true</failIfUnknown>
+          <excludes>
+            <exclude>LICENSE</exclude>
+            <exclude>Makefile</exclude>
+            <exclude>mvnw</exclude>
+            <exclude>mvnw.cmd</exclude>
+            <exclude>travis/publish.sh</exclude>
+            <exclude>.mvn/wrapper/maven-wrapper.properties</exclude>
+            <exclude>**/*.factories</exclude>
+            <exclude>**/ExecutorBeanPostProcessor.java</exclude>
+            <exclude>**/TraceEnvironmentPostProcessor.java</exclude>
+            <exclude>**/test/resources/application.yml</exclude>
+          </excludes>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.mycila</groupId>
+            <artifactId>license-maven-plugin-git</artifactId>
+            <version>${version.maven-license-plugin}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <!-- Creates source jar -->
+          <plugin>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>${version.maven-source-plugin}</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- Creates javadoc jar -->
+          <plugin>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${version.maven-javadoc-plugin}</version>
+            <configuration>
+              <failOnError>false</failOnError>
+              <!-- disable strict lint: we don't document all params, throws statements.. -->
+              <doclint>none</doclint>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
