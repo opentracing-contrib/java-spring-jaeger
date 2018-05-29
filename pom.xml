@@ -213,7 +213,6 @@
           <failIfUnknown>true</failIfUnknown>
           <excludes>
             <exclude>LICENSE</exclude>
-            <exclude>Makefile</exclude>
             <exclude>mvnw</exclude>
             <exclude>mvnw.cmd</exclude>
             <exclude>travis/publish.sh</exclude>
