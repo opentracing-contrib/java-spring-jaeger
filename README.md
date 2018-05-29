@@ -5,7 +5,7 @@
 ```xml
 <dependency>
   <groupId>io.opentracing.contrib</groupId>
-  <artifactId>java-spring-jaeger-parent</artifactId>
+  <artifactId>opentracing-spring-jaeger-starter</artifactId>
 </dependency>
 ```
 
