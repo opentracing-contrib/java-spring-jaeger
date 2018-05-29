@@ -27,7 +27,7 @@ for the UDP sender, or use an HTTP sender by setting the following property:
 
 ## Configuration options
 
-All the available configuration options can be seen in [JaegerConfigurationProperties](src/main/java/io/opentracing/contrib/spring/cloud/starter/jaeger/JaegerAutoConfiguration.java).
+All the available configuration options can be seen in [JaegerConfigurationProperties](src/main/java/io/opentracing/contrib/java/spring/jaeger/JaegerAutoConfiguration.java).
 The prefix to be used for these properties is `opentracing.jaeger`.
 Furthermore, the service name is configured via the standard Spring Cloud `spring.application.name` property.
 
