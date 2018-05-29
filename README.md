@@ -9,8 +9,7 @@
 </dependency>
 ```
 
-Simply adding the dependency to the application will ensure that all required OpenTracing and Jaeger dependencies are transitively resolved.
-Furthermore the dependency will ensure that Spring Boot will auto configure all the necessary OpenTracing beans when the application starts.
+The dependency will ensure that Spring Boot will auto configure a Jaeger implementation of OpenTracing's `Tracer` when the application starts.
 
 If no settings are changed, spans will be reported to the UDP port `6831` of `localhost`.
 The simplest way to change this behavior is to set the following properties:
