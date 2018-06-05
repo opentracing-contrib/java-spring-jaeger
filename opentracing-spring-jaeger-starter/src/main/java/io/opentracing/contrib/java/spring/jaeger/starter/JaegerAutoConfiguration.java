@@ -62,9 +62,8 @@ public class JaegerAutoConfiguration {
   private String serviceName;
 
   @Bean
-  public io.opentracing.Tracer tracer(JaegerConfigurationProperties jaegerConfigurationProperties,
-        Sampler sampler,
-        Reporter reporter) {
+  public io.opentracing.Tracer tracer(Sampler sampler,
+                                      Reporter reporter) {
 
     final Builder builder =
         new Builder(serviceName)
@@ -159,12 +158,6 @@ public class JaegerAutoConfiguration {
     return new NoopMetricsFactory();
   }
 
-  @ConditionalOnProperty(value = "opentracing.jaeger.enable-b3-propagation", havingValue = "true")
-  @Bean
-  public TracerBuilderCustomizer b3CodecJaegerTracerCustomizer() {
-    return new B3CodecTracerBuilderCustomizer();
-  }
-
   /**
    * Decide on what Sampler to use based on the various configuration options in
    * JaegerConfigurationProperties Fallback to ConstSampler(true) when no Sampler is configured
@@ -200,4 +193,13 @@ public class JaegerAutoConfiguration {
     return new ConstSampler(true);
   }
 
+  @Configuration
+  @ConditionalOnProperty(value = "opentracing.jaeger.enable-b3-propagation")
+  public static class B3CodecConfiguration {
+
+    @Bean
+    public TracerBuilderCustomizer b3CodecJaegerTracerCustomizer() {
+      return new B3CodecTracerBuilderCustomizer();
+    }
+  }
 }
