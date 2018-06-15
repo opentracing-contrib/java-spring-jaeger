@@ -23,7 +23,7 @@
     <version>0.1.2-SNAPSHOT</version>
   </parent>
 
-  <artifactId>opentracing-spring-jaeger-starter-it</artifactId>
+  <artifactId>opentracing-spring-jaeger-web-starter-it</artifactId>
 
   <properties>
     <main.basedir>${project.basedir}/..</main.basedir>
@@ -32,15 +32,7 @@
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>opentracing-spring-jaeger-starter</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>io.opentracing.contrib</groupId>
-      <artifactId>opentracing-spring-web-autoconfigure</artifactId>
-      <version>0.3.2</version>
+      <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
       <scope>test</scope>
     </dependency>
 
