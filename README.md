@@ -8,7 +8,7 @@ interface.
 For a project to be able to actually instrument a Spring stack, one or more of the purpose built starters (like `io.opentracing.contrib:opentracing-spring-web-starter` or `io.opentracing.contrib:opentracing-spring-cloud-starter`)  
 would also have to be included in the POM.
 
-The `opentracing-jaeger-spring-web-starter` starter is convenience starter that includes both `opentracing-spring-jaeger-starter` and `opentracing-spring-web-starter`
+The `opentracing-spring-jaeger-web-starter` starter is convenience starter that includes both `opentracing-spring-jaeger-starter` and `opentracing-spring-web-starter`
 This means that by including it, simple web Spring Boot microservices include all the necessary dependencies to instrument Web requests / responses and send traces to Jaeger.   
 
 ## Configuration
@@ -16,7 +16,7 @@ This means that by including it, simple web Spring Boot microservices include al
 ```xml
 <dependency>
   <groupId>io.opentracing.contrib</groupId>
-  <artifactId>opentracing-jaeger-spring-web-starter</artifactId>
+  <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
 </dependency>
 ```
 
