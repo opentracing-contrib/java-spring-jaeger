@@ -22,7 +22,8 @@
   <version>0.1.2-SNAPSHOT</version>
   <modules>
     <module>opentracing-spring-jaeger-starter</module>
-    <module>opentracing-spring-jaeger-starter-it</module>
+    <module>opentracing-spring-jaeger-web-starter</module>
+    <module>opentracing-spring-jaeger-web-starter-it</module>
   </modules>
   <packaging>pom</packaging>
 
@@ -86,6 +87,12 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>opentracing-spring-jaeger-starter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
         <version>${project.version}</version>
       </dependency>
 
