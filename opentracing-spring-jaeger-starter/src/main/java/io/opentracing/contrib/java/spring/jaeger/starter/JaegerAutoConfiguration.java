@@ -51,7 +51,7 @@ import org.springframework.util.StringUtils;
 @ConditionalOnClass(io.jaegertracing.Tracer.class)
 @ConditionalOnMissingBean(io.opentracing.Tracer.class)
 @ConditionalOnProperty(value = "opentracing.jaeger.enabled", havingValue = "true", matchIfMissing = true)
-@AutoConfigureBefore(name = "io.opentracing.contrib.spring.web.autoconfig.TracerAutoConfiguration")
+@AutoConfigureBefore(io.opentracing.contrib.spring.tracer.configuration.TracerAutoConfiguration.class)
 @EnableConfigurationProperties(JaegerConfigurationProperties.class)
 public class JaegerAutoConfiguration {
 

@@ -31,6 +31,11 @@
 
     <dependencies>
       <dependency>
+        <groupId>io.opentracing.contrib</groupId>
+        <artifactId>opentracing-spring-tracer-configuration-starter</artifactId>
+        <version>${version.io.opentracing.contrib-opentracing-spring-tracer}</version>
+      </dependency>
+      <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-autoconfigure</artifactId>
         <optional>true</optional>
