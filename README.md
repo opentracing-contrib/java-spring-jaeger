@@ -32,7 +32,7 @@ opentracing.jaeger.udp-sender.port=portNumber
 
 for the UDP sender, or use an HTTP sender by setting the following property:
  
-`opentracing.jaeger.http-sender.url = http://jaegerhost:portNumber` 
+`opentracing.jaeger.http-sender.url = http://jaegerhost:portNumber/api/traces` 
    
 
 ## Configuration options
