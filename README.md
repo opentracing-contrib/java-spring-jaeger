@@ -64,7 +64,7 @@ Configuring senders is as simple as setting a couple necessary properties
 
 ### HTTP Sender
 
-`opentracing.jaeger.http-sender.url = http://jaegerhost:portNumber`
+`opentracing.jaeger.http-sender.url = http://jaegerhost:portNumber/api/traces`
 
 It's possible to configure authentication on the HTTP sender by specifying an username and password:
 
