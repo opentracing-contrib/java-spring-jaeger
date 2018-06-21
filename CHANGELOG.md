@@ -17,8 +17,14 @@ Changes by Version
 
 - Add a new starter that combines jaeger and opentracing web
 
-0.1.1 (2018-06-04)
+
+0.1.2 (2018-06-18)
 -------------------
+
+Skipped due to maven release issue
+
+
+0.1.1 (2018-06-04)
 
 - Exclude integration tests from maven deploy / release
 
