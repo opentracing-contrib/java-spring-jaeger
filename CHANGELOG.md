@@ -25,6 +25,7 @@ Skipped due to maven release issue
 
 
 0.1.1 (2018-06-04)
+-------------------
 
 - Exclude integration tests from maven deploy / release
 
