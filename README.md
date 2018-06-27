@@ -9,7 +9,10 @@ For a project to be able to actually instrument a Spring stack, one or more of t
 would also have to be included in the POM.
 
 The `opentracing-spring-jaeger-web-starter` starter is convenience starter that includes both `opentracing-spring-jaeger-starter` and `opentracing-spring-web-starter`
-This means that by including it, simple web Spring Boot microservices include all the necessary dependencies to instrument Web requests / responses and send traces to Jaeger.   
+This means that by including it, simple web Spring Boot microservices include all the necessary dependencies to instrument Web requests / responses and send traces to Jaeger.
+
+The `opentracing-spring-jaeger-cloud-starter` starter is convenience starter that includes both `opentracing-spring-jaeger-starter` and `opentracing-spring-cloud-starter`
+This means that by including it, all parts of the Spring Cloud stack supported by Opentracing will be instrumented   
 
 ## Configuration
 
@@ -20,7 +23,16 @@ This means that by including it, simple web Spring Boot microservices include al
 </dependency>
 ```
 
-The dependency will ensure that Spring Boot will auto configure a Jaeger implementation of OpenTracing's `Tracer` when the application starts.
+or
+
+```xml
+<dependency>
+  <groupId>io.opentracing.contrib</groupId>
+  <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
+</dependency>
+```
+
+Either dependency will ensure that Spring Boot will auto configure a Jaeger implementation of OpenTracing's `Tracer` when the application starts.
 
 If no settings are changed, spans will be reported to the UDP port `6831` of `localhost`.
 The simplest way to change this behavior is to set the following properties:
