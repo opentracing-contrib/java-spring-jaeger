@@ -1,10 +1,16 @@
 Changes by Version
 ==================
 
-0.1.5 (unreleased)
+
+0.1.6 (unreleased)
 -------------------
 
 - Nothing yet
+
+0.1.5 (2018-07-05)
+-------------------
+
+- Add a new starter that combines jaeger and opentracing java spring cloud
 
 
 0.1.4 (2018-06-20)
