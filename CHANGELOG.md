@@ -2,10 +2,10 @@ Changes by Version
 ==================
 
 
-0.1.6 (unreleased)
+0.2.0 (2018-07-17)
 -------------------
 
-- Nothing yet
+- Update to jaeger-client 0.30.x
 
 0.1.5 (2018-07-05)
 -------------------
