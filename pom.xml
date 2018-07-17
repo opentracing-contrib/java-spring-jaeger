@@ -120,12 +120,7 @@
       </dependency>
       <dependency>
         <groupId>io.jaegertracing</groupId>
-        <artifactId>jaeger-core</artifactId>
-        <version>${version.jaeger}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.jaegertracing</groupId>
-        <artifactId>jaeger-thrift</artifactId>
+        <artifactId>jaeger-client</artifactId>
         <version>${version.jaeger}</version>
       </dependency>
       <dependency>
