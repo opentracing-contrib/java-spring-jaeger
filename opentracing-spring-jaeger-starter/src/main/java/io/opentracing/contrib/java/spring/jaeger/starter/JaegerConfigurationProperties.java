@@ -253,7 +253,7 @@ public class JaegerConfigurationProperties {
     private String hostPort;
 
     private Double samplingRate =
-        io.jaegertracing.samplers.ProbabilisticSampler.DEFAULT_SAMPLING_PROBABILITY;
+        io.jaegertracing.internal.samplers.ProbabilisticSampler.DEFAULT_SAMPLING_PROBABILITY;
 
 
     public String getHostPort() {

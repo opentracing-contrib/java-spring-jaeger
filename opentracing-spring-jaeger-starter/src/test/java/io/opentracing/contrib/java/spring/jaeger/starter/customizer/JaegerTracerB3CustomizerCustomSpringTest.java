@@ -16,7 +16,7 @@ package io.opentracing.contrib.java.spring.jaeger.starter.customizer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.jaegertracing.SpanContext;
+import io.jaegertracing.internal.JaegerSpanContext;
 import io.opentracing.Tracer;
 import io.opentracing.contrib.java.spring.jaeger.starter.AbstractTracerSpringTest;
 import io.opentracing.contrib.java.spring.jaeger.starter.TracerBuilderCustomizer;
@@ -58,7 +58,7 @@ public class JaegerTracerB3CustomizerCustomSpringTest extends AbstractTracerSpri
     carrier.put("X-B3-TraceId", "abc");
     carrier.put("X-B3-SpanId", "def");
 
-    SpanContext context = (SpanContext) tracer.extract(Format.Builtin.HTTP_HEADERS, new TextMapExtractAdapter(carrier));
+    JaegerSpanContext context = (JaegerSpanContext) tracer.extract(Format.Builtin.HTTP_HEADERS, new TextMapExtractAdapter(carrier));
 
     // Note: This test ensures that B3 codec actually works
     // If it would not, values would never be extracted from B3 headers and context will be null

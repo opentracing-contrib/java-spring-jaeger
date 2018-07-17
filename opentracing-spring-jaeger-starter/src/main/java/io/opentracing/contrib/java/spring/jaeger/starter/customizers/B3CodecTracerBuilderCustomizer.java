@@ -13,15 +13,15 @@
  */
 package io.opentracing.contrib.java.spring.jaeger.starter.customizers;
 
-import io.jaegertracing.Tracer;
-import io.jaegertracing.propagation.B3TextMapCodec;
+import io.jaegertracing.internal.JaegerTracer;
+import io.jaegertracing.internal.propagation.B3TextMapCodec;
 import io.opentracing.contrib.java.spring.jaeger.starter.TracerBuilderCustomizer;
 import io.opentracing.propagation.Format;
 
 public class B3CodecTracerBuilderCustomizer implements TracerBuilderCustomizer {
 
   @Override
-  public void customize(Tracer.Builder builder) {
+  public void customize(JaegerTracer.Builder builder) {
     B3TextMapCodec injector = new B3TextMapCodec();
 
     builder.registerInjector(Format.Builtin.HTTP_HEADERS, injector)

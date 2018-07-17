@@ -15,8 +15,8 @@ package io.opentracing.contrib.java.spring.jaeger.starter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.jaegertracing.reporters.CompositeReporter;
-import io.jaegertracing.reporters.RemoteReporter;
+import io.jaegertracing.internal.reporters.CompositeReporter;
+import io.jaegertracing.internal.reporters.RemoteReporter;
 import org.assertj.core.api.Condition;
 
 public abstract class AbstractSenderSpringTest extends AbstractTracerSpringTest {

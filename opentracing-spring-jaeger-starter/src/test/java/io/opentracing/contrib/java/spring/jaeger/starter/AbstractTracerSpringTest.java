@@ -29,7 +29,7 @@ public abstract class AbstractTracerSpringTest {
   @Autowired(required = false)
   protected Tracer tracer;
 
-  protected io.jaegertracing.Tracer getTracer() {
-    return (io.jaegertracing.Tracer) tracer;
+  protected io.jaegertracing.internal.JaegerTracer getTracer() {
+    return (io.jaegertracing.internal.JaegerTracer) tracer;
   }
 }

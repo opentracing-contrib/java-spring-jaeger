@@ -13,7 +13,7 @@
  */
 package io.opentracing.contrib.java.spring.jaeger.starter;
 
-import io.jaegertracing.reporters.Reporter;
+import io.jaegertracing.spi.Reporter;
 import java.util.Collection;
 
 @FunctionalInterface
