@@ -13,7 +13,7 @@
  */
 package io.opentracing.contrib.java.spring.jaeger.starter;
 
-import io.jaegertracing.Tracer;
+import io.jaegertracing.internal.JaegerTracer;
 
 @FunctionalInterface
 public interface TracerBuilderCustomizer {
@@ -22,5 +22,5 @@ public interface TracerBuilderCustomizer {
    * Provides the ability to execute arbitrary operations on the builder The customizer should NOT
    * call the build method
    */
-  void customize(Tracer.Builder builder);
+  void customize(JaegerTracer.Builder builder);
 }

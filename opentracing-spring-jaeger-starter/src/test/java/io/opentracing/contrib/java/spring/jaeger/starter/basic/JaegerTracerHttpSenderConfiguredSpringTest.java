@@ -31,9 +31,9 @@ public class JaegerTracerHttpSenderConfiguredSpringTest extends AbstractSenderSp
   @Test
   public void testExpectedReporter() {
     assertThat(tracer).isNotNull();
-    assertThat(tracer).isInstanceOf(io.jaegertracing.Tracer.class);
+    assertThat(tracer).isInstanceOf(io.jaegertracing.internal.JaegerTracer.class);
 
-    assertSenderClass(io.jaegertracing.senders.HttpSender.class);
+    assertSenderClass(io.jaegertracing.thrift.internal.senders.HttpSender.class);
   }
 
 }

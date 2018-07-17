@@ -13,21 +13,20 @@
  */
 package io.opentracing.contrib.java.spring.jaeger.starter;
 
-import io.jaegertracing.Tracer.Builder;
-import io.jaegertracing.metrics.Metrics;
-import io.jaegertracing.metrics.MetricsFactory;
-import io.jaegertracing.metrics.NoopMetricsFactory;
-import io.jaegertracing.reporters.CompositeReporter;
-import io.jaegertracing.reporters.LoggingReporter;
-import io.jaegertracing.reporters.Reporter;
-import io.jaegertracing.samplers.ConstSampler;
-import io.jaegertracing.samplers.HttpSamplingManager;
-import io.jaegertracing.samplers.ProbabilisticSampler;
-import io.jaegertracing.samplers.RateLimitingSampler;
-import io.jaegertracing.samplers.RemoteControlledSampler;
-import io.jaegertracing.samplers.Sampler;
-import io.jaegertracing.senders.HttpSender;
-import io.jaegertracing.senders.Sender;
+import io.jaegertracing.internal.JaegerTracer;
+import io.jaegertracing.internal.metrics.Metrics;
+import io.jaegertracing.internal.metrics.NoopMetricsFactory;
+import io.jaegertracing.internal.reporters.CompositeReporter;
+import io.jaegertracing.internal.reporters.LoggingReporter;
+import io.jaegertracing.internal.samplers.ConstSampler;
+import io.jaegertracing.internal.samplers.HttpSamplingManager;
+import io.jaegertracing.internal.samplers.ProbabilisticSampler;
+import io.jaegertracing.internal.samplers.RateLimitingSampler;
+import io.jaegertracing.internal.samplers.RemoteControlledSampler;
+import io.jaegertracing.spi.MetricsFactory;
+import io.jaegertracing.spi.Reporter;
+import io.jaegertracing.spi.Sampler;
+import io.jaegertracing.spi.Sender;
 import io.opentracing.contrib.java.spring.jaeger.starter.JaegerConfigurationProperties.RemoteReporter;
 import io.opentracing.contrib.java.spring.jaeger.starter.customizers.B3CodecTracerBuilderCustomizer;
 import java.util.Collections;
@@ -48,7 +47,7 @@ import org.springframework.util.StringUtils;
  * @author <a href="mailto:gytis@redhat.com">Gytis Trikleris</a>
  */
 @Configuration
-@ConditionalOnClass(io.jaegertracing.Tracer.class)
+@ConditionalOnClass(io.jaegertracing.internal.JaegerTracer.class)
 @ConditionalOnMissingBean(io.opentracing.Tracer.class)
 @ConditionalOnProperty(value = "opentracing.jaeger.enabled", havingValue = "true", matchIfMissing = true)
 @AutoConfigureBefore(io.opentracing.contrib.spring.tracer.configuration.TracerAutoConfiguration.class)
@@ -65,8 +64,8 @@ public class JaegerAutoConfiguration {
   public io.opentracing.Tracer tracer(Sampler sampler,
                                       Reporter reporter) {
 
-    final Builder builder =
-        new Builder(serviceName)
+    final JaegerTracer.Builder builder =
+        new JaegerTracer.Builder(serviceName)
             .withReporter(reporter)
             .withSampler(sampler);
 
@@ -105,9 +104,10 @@ public class JaegerAutoConfiguration {
   private Reporter getUdpReporter(Metrics metrics,
       RemoteReporter remoteReporter,
       JaegerConfigurationProperties.UdpSender udpSenderProperties) {
-    io.jaegertracing.senders.UdpSender udpSender = new io.jaegertracing.senders.UdpSender(
-        udpSenderProperties.getHost(), udpSenderProperties.getPort(),
-        udpSenderProperties.getMaxPacketSize());
+    io.jaegertracing.thrift.internal.senders.UdpSender udpSender =
+        new io.jaegertracing.thrift.internal.senders.UdpSender(
+          udpSenderProperties.getHost(), udpSenderProperties.getPort(),
+          udpSenderProperties.getMaxPacketSize());
 
     return createReporter(metrics, remoteReporter, udpSender);
   }
@@ -115,7 +115,8 @@ public class JaegerAutoConfiguration {
   private Reporter getHttpReporter(Metrics metrics,
       RemoteReporter remoteReporter,
       JaegerConfigurationProperties.HttpSender httpSenderProperties) {
-    HttpSender.Builder builder = new HttpSender.Builder(httpSenderProperties.getUrl());
+    io.jaegertracing.thrift.internal.senders.HttpSender.Builder builder =
+        new io.jaegertracing.thrift.internal.senders.HttpSender.Builder(httpSenderProperties.getUrl());
     if (httpSenderProperties.getMaxPayload() != null) {
       builder = builder.withMaxPacketSize(httpSenderProperties.getMaxPayload());
     }
@@ -131,8 +132,8 @@ public class JaegerAutoConfiguration {
 
   private Reporter createReporter(Metrics metrics,
       RemoteReporter remoteReporter, Sender udpSender) {
-    io.jaegertracing.reporters.RemoteReporter.Builder builder =
-        new io.jaegertracing.reporters.RemoteReporter.Builder()
+    io.jaegertracing.internal.reporters.RemoteReporter.Builder builder =
+        new io.jaegertracing.internal.reporters.RemoteReporter.Builder()
             .withSender(udpSender)
             .withMetrics(metrics);
 
