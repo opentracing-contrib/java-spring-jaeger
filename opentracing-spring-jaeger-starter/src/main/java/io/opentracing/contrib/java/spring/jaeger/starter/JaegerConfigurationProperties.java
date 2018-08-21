@@ -40,6 +40,8 @@ public class JaegerConfigurationProperties {
    */
   private boolean enableB3Propagation = false;
 
+  private boolean expandExceptionLogs = false;
+
   public boolean isEnabled() {
     return enabled;
   }
@@ -62,6 +64,14 @@ public class JaegerConfigurationProperties {
 
   public void setEnableB3Propagation(boolean enableB3Propagation) {
     this.enableB3Propagation = enableB3Propagation;
+  }
+
+  public boolean isExpandExceptionLogs() {
+    return expandExceptionLogs;
+  }
+
+  public void setExpandExceptionLogs(boolean expandExceptionLogs) {
+    this.expandExceptionLogs = expandExceptionLogs;
   }
 
   public HttpSender getHttpSender() {
