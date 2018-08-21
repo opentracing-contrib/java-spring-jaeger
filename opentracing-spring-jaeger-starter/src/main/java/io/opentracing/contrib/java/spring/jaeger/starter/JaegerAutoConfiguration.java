@@ -29,6 +29,7 @@ import io.jaegertracing.spi.Sampler;
 import io.jaegertracing.spi.Sender;
 import io.opentracing.contrib.java.spring.jaeger.starter.JaegerConfigurationProperties.RemoteReporter;
 import io.opentracing.contrib.java.spring.jaeger.starter.customizers.B3CodecTracerBuilderCustomizer;
+import io.opentracing.contrib.java.spring.jaeger.starter.customizers.ExpandExceptionLogsTracerBuilderCustomizer;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -201,6 +202,16 @@ public class JaegerAutoConfiguration {
     @Bean
     public TracerBuilderCustomizer b3CodecJaegerTracerCustomizer() {
       return new B3CodecTracerBuilderCustomizer();
+    }
+  }
+
+  @Configuration
+  @ConditionalOnProperty(value = "opentracing.jaeger.expand-exception-logs")
+  public static class ExpandExceptionLogsConfiguration {
+
+    @Bean
+    public TracerBuilderCustomizer expandExceptionLogsJaegerTracerCustomizer() {
+      return new ExpandExceptionLogsTracerBuilderCustomizer();
     }
   }
 }
