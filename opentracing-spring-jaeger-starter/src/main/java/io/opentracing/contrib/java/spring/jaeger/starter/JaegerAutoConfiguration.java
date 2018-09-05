@@ -65,8 +65,10 @@ public class JaegerAutoConfiguration {
   public io.opentracing.Tracer tracer(Sampler sampler,
                                       Reporter reporter) {
 
-    final JaegerTracer.Builder builder =
-        new JaegerTracer.Builder(serviceName)
+    // Serive name needs to be a system property to be picked up because of how fromEnv() works.
+    System.setProperty("JAEGER_SERVICE_NAME", serviceName); 
+
+    final JaegerTracer.Builder builder = io.jaegertracing.Configuration.fromEnv().getTracerBuilder()
             .withReporter(reporter)
             .withSampler(sampler);
 
