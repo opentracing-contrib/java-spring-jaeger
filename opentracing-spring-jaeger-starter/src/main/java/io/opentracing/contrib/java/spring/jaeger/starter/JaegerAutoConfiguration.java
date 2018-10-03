@@ -63,12 +63,14 @@ public class JaegerAutoConfiguration {
 
   @Bean
   public io.opentracing.Tracer tracer(Sampler sampler,
-                                      Reporter reporter) {
+                                      Reporter reporter,
+                                      Metrics metrics) {
 
     final JaegerTracer.Builder builder =
         new JaegerTracer.Builder(serviceName)
             .withReporter(reporter)
-            .withSampler(sampler);
+            .withSampler(sampler)
+            .withMetrics(metrics);
 
     tracerCustomizers.forEach(c -> c.customize(builder));
 
@@ -150,7 +152,7 @@ public class JaegerAutoConfiguration {
 
   @ConditionalOnMissingBean
   @Bean
-  public Metrics reporterMetrics(MetricsFactory metricsFactory) {
+  public Metrics metrics(MetricsFactory metricsFactory) {
     return new Metrics(metricsFactory);
   }
 
