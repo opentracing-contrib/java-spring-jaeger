@@ -152,7 +152,7 @@ public class JaegerAutoConfiguration {
 
   @ConditionalOnMissingBean
   @Bean
-  public Metrics reporterMetrics(MetricsFactory metricsFactory) {
+  public Metrics metrics(MetricsFactory metricsFactory) {
     return new Metrics(metricsFactory);
   }
 
