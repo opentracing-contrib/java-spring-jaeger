@@ -1,6 +1,16 @@
 Changes by Version
 ==================
 
+
+0.2.2 (2018-10-10)
+-------------------
+
+- Bump jaeger version
+- Bump opentracing-spring-web version (#22)
+- Set opentracing-spring-cloud-starter.version to 0.2.0 (#21)
+- Set 'metrics' object on the Tracer itself. (#19)
+
+
 0.2.1 (2018-08-21)
 -------------------
 
