@@ -151,8 +151,10 @@ and will be used to by the Tracer instead of the auto-configured beans.
 
 ### io.jaegertracing.Tracer.Builder customization
 
-Right before the `Tracer` is created, it is possible to provide arbitrary customizations to `Tracer.Builder` by providing a bean
-of type `JaegerTracerCustomizer`
+If arbitrary customizations need to be performed on `Tracer.Builder` but you don't want to forgo the rest of the auto-configuration
+features, `TracerBuilderCustomizer` comes in handy. It allows the developer to invoke any method of `Tracer.Builder` (with the exception of `build`)
+before the auto-configuration code invokes the `build` method.
+Examples of this type of customization can be seen in the `B3CodecTracerBuilderCustomizer` and `ExpandExceptionLogsTracerBuilderCustomizer` classes. 
 
 ## Caution
 
