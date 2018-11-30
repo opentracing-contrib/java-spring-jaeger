@@ -63,7 +63,7 @@ public class JaegerTracerB3CustomizerCustomSpringTest extends AbstractTracerSpri
     // Note: This test ensures that B3 codec actually works
     // If it would not, values would never be extracted from B3 headers and context will be null
     assertThat(context).isNotNull();
-    assertThat(context.getTraceId()).isEqualTo(0xabc);
-    assertThat(context.getSpanId()).isEqualTo(0xdef);
+    assertThat(context.getTraceId()).isEqualTo("abc");
+    assertThat(context.getSpanId()).isEqualTo(3567L);
   }
 }
