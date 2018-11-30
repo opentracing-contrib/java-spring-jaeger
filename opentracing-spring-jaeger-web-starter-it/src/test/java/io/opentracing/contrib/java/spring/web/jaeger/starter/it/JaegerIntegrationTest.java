@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.EnvironmentTestUtils;
+import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -30,6 +30,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.HttpWaitStrategy;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
@@ -91,15 +92,14 @@ public class JaegerIntegrationTest {
 
     @Override
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-      EnvironmentTestUtils
-          .addEnvironment("testcontainers", configurableApplicationContext.getEnvironment(),
-              String.format(
-                  "opentracing.jaeger.http-sender.url=http://%s:%d/api/traces",
-                  jaeger.getContainerIpAddress(),
-                  jaeger.getMappedPort(COLLECTOR_PORT)
-              ),
-              String.format("spring.application.name=%s", SERVICE_NAME)
-      );
+      TestPropertyValues.of(
+          String.format(
+              "opentracing.jaeger.http-sender.url=http://%s:%d/api/traces",
+              jaeger.getContainerIpAddress(),
+              jaeger.getMappedPort(COLLECTOR_PORT)
+          ),
+          String.format("spring.application.name=%s", SERVICE_NAME)
+      ).applyTo(configurableApplicationContext);
     }
   }
 
