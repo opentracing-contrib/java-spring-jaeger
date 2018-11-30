@@ -175,6 +175,41 @@ Maven checkstyle plugin is used to maintain consistent code style based on [Goog
 ./mvnw clean install
 ```
 
+## Tips and tricks
+
+### Completely disable tracing
+
+There are times when it might be desirable to completely disable tracing (for example in a testing environment).
+Due to the multiple (auto)configurations that come into play, this is not as simple as setting `opentracing.jaeger.enabled` to `false`.
+
+When one of the starters of this project is included, then `io.opentracing.contrib:opentracing-spring-tracer-configuration-starter` is also included since it performs some necessary plumbing.
+However, when `opentracing.jaeger.enabled` is set to `false`, then the aforementioned dependency provides a default `Tracer` implementation that needs the `JAEGER_SERVICE_NAME` environment variable (see [this](https://github.com/jaegertracing/jaeger-client-java/blob/master/jaeger-core/README.md)).
+
+One simple way around this would be to do the add the following Spring configuration:
+
+```java
+@ConditionalOnProperty(value = "opentracing.jaeger.enabled", havingValue = "false", matchIfMissing = false)
+@Configuration
+public class MyTracerConfiguration {
+
+    @Bean
+    public io.opentracing.Tracer jaegerTracer() {
+         final Reporter reporter = new InMemoryReporter();
+         final Sampler sampler = new ConstSampler(false);
+         return new JaegerTracer.Builder("untraced-service")
+                    .withReporter(reporter)
+                    .withSampler(sampler)
+                    .build();
+        }
+    }
+
+}
+```
+
+In the code above we are activating a `io.opentracing.Tracer` iff `opentracing.jaeger.enabled` is set to `false`. This tracer
+is necessary to keep the various Spring configurations happy but has been configured to not sample any requests, therefore
+effectively disabling tracing.
+
 ## Release
 Follow instructions in [RELEASE](RELEASE.md)
 
