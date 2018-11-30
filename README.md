@@ -14,6 +14,11 @@ This means that by including it, simple web Spring Boot microservices include al
 The `opentracing-spring-jaeger-cloud-starter` starter is convenience starter that includes both `opentracing-spring-jaeger-starter` and `opentracing-spring-cloud-starter`
 This means that by including it, all parts of the Spring Cloud stack supported by Opentracing will be instrumented   
 
+
+## Library versions
+
+Versions 1.x.y of the library are meant to target Spring Boot 2.x while versions 0.x.y are meant to be used with Spring Boot 1.5
+
 ## Configuration
 
 ```xml
