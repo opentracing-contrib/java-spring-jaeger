@@ -168,12 +168,6 @@ Examples of this type of customization can be seen in the `B3CodecTracerBuilderC
 In a high traffic environment, the default sampler that is configured is very unsafe since it samples every request.
 It is therefore highly recommended to explicitly configure on of the other options in a production environment
 
-### Spring => 4.3.9 required
-
-Due to a bug in the depedency injection of Spring, you need at least version => 4.3.9
-
-Reference: https://jira.spring.io/browse/SPR-15268
-
 ## Development
 Maven checkstyle plugin is used to maintain consistent code style based on [Google Style Guides](https://github.com/google/styleguide)
 
