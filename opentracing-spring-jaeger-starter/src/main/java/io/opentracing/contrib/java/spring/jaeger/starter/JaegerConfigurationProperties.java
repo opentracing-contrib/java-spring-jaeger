@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 The OpenTracing Authors
+ * Copyright 2018-2019 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -13,10 +13,18 @@
  */
 package io.opentracing.contrib.java.spring.jaeger.starter;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
 
 @ConfigurationProperties("opentracing.jaeger")
 public class JaegerConfigurationProperties {
+  /**
+   * Prefix for all properties used to configure the Jaeger tracer.
+   */
+  static final String JAEGER_PREFIX = "JAEGER_";
+  static final String JAEGER_TAGS = JAEGER_PREFIX + "TAGS";
 
   private final RemoteReporter remoteReporter = new RemoteReporter();
   private final HttpSender httpSender = new HttpSender();
@@ -41,6 +49,13 @@ public class JaegerConfigurationProperties {
   private boolean enableB3Propagation = false;
 
   private boolean expandExceptionLogs = false;
+
+  private Map<String, String> tags = new HashMap<>();
+
+  /**
+   * If enabled, tags from the JAEGER_TAGS env variable will be included
+   */
+  private boolean includeJaegerEnvTags = false;
 
   public boolean isEnabled() {
     return enabled;
@@ -72,6 +87,55 @@ public class JaegerConfigurationProperties {
 
   public void setExpandExceptionLogs(boolean expandExceptionLogs) {
     this.expandExceptionLogs = expandExceptionLogs;
+  }
+
+  public Map<String, String> getTags() {
+    return tags;
+  }
+
+  public void setTags(Map<String, String> tags) {
+    this.tags = tags;
+  }
+
+  public Map<String, String> determineTags() {
+    if (!includeJaegerEnvTags) {
+      return tags;
+    }
+
+    final Map<String, String> result = new HashMap<>(tags);
+    result.putAll(tracerTagsFromEnv());
+    return result;
+  }
+
+  // inspired by io.jaegertracing.Configuration#tracerTagsFromEnv
+  private Map<String, String> tracerTagsFromEnv() {
+    final Map<String, String> tracerTagMaps = new HashMap<>();
+    final String tracerTags = getProperty(JAEGER_TAGS);
+    if (tracerTags != null) {
+      final String[] tags = tracerTags.split("\\s*,\\s*");
+      for (String tag : tags) {
+        final String[] tagValue = tag.split("\\s*=\\s*");
+        if (tagValue.length == 2) {
+          tracerTagMaps.put(tagValue[0], tagValue[1]);
+        }
+      }
+    }
+    return tracerTagMaps;
+  }
+
+  /**
+   * Retrieve a property name either from the Java system properties or Environment Variables
+   */
+  private String getProperty(String name) {
+    return System.getProperty(name, System.getenv(name));
+  }
+
+  public boolean isIncludeJaegerEnvTags() {
+    return includeJaegerEnvTags;
+  }
+
+  public void setIncludeJaegerEnvTags(boolean includeJaegerEnvTags) {
+    this.includeJaegerEnvTags = includeJaegerEnvTags;
   }
 
   public HttpSender getHttpSender() {
