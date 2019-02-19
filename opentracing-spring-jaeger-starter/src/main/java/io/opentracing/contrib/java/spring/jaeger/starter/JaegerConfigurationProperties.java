@@ -14,11 +14,9 @@
 package io.opentracing.contrib.java.spring.jaeger.starter;
 
 import io.jaegertracing.Configuration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import java.util.HashMap;
 import java.util.Map;
-
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("opentracing.jaeger")
 public class JaegerConfigurationProperties {

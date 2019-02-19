@@ -13,16 +13,17 @@
  */
 package io.opentracing.contrib.java.spring.jaeger.starter;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.data.MapEntry.entry;
+
 import io.jaegertracing.Configuration;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.data.MapEntry.entry;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class JaegerConfigurationPropertiesTagsTest {
 
