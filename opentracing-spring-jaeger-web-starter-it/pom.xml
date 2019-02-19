@@ -20,7 +20,7 @@
   <parent>
     <groupId>io.opentracing.contrib</groupId>
     <artifactId>opentracing-spring-jaeger-parent</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
 
   <artifactId>opentracing-spring-jaeger-web-starter-it</artifactId>
