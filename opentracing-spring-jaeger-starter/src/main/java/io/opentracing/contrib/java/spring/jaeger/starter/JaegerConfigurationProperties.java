@@ -13,18 +13,15 @@
  */
 package io.opentracing.contrib.java.spring.jaeger.starter;
 
+import io.jaegertracing.Configuration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 
 @ConfigurationProperties("opentracing.jaeger")
 public class JaegerConfigurationProperties {
-  /**
-   * Prefix for all properties used to configure the Jaeger tracer.
-   */
-  static final String JAEGER_PREFIX = "JAEGER_";
-  static final String JAEGER_TAGS = JAEGER_PREFIX + "TAGS";
 
   private final RemoteReporter remoteReporter = new RemoteReporter();
   private final HttpSender httpSender = new HttpSender();
@@ -110,7 +107,7 @@ public class JaegerConfigurationProperties {
   // inspired by io.jaegertracing.Configuration#tracerTagsFromEnv
   private Map<String, String> tracerTagsFromEnv() {
     final Map<String, String> tracerTagMaps = new HashMap<>();
-    final String tracerTags = getProperty(JAEGER_TAGS);
+    final String tracerTags = getProperty(Configuration.JAEGER_TAGS);
     if (tracerTags != null) {
       final String[] tags = tracerTags.split("\\s*,\\s*");
       for (String tag : tags) {

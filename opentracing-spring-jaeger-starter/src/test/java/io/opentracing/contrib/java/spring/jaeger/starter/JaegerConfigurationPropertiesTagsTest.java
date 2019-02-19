@@ -13,21 +13,23 @@
  */
 package io.opentracing.contrib.java.spring.jaeger.starter;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.data.MapEntry.entry;
-
-import java.util.HashMap;
-import java.util.Map;
+import io.jaegertracing.Configuration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.data.MapEntry.entry;
 
 public class JaegerConfigurationPropertiesTagsTest {
 
   @Before
   @After
   public void clearProperties() {
-    System.clearProperty(JaegerConfigurationProperties.JAEGER_TAGS);
+    System.clearProperty(Configuration.JAEGER_TAGS);
   }
 
   @Test
@@ -43,7 +45,7 @@ public class JaegerConfigurationPropertiesTagsTest {
 
   @Test
   public void envTagsIncluded() {
-    System.setProperty(JaegerConfigurationProperties.JAEGER_TAGS, "t3, t4 = v4");
+    System.setProperty(Configuration.JAEGER_TAGS, "t3, t4 = v4");
 
     final Map<String, String> tagsInProperties = new HashMap<>();
     tagsInProperties.put("t1", "v1");
