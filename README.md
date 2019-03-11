@@ -68,7 +68,7 @@ Beware to use the correct syntax for properties that are camel-case in `JaegerCo
 If no configuration options are changed and the user does not manually provide any of the beans that the 
 auto-configuration process provides, the following defaults are used:
 
-* `unknown-spring-boot` Will be used as the service-name if no value has been specified to the property `spring.application.name`. 
+* `unknown-spring-boot` Will be used as the service-name if no value has been specified to the property `spring.application.name` or `opentracing.jaeger.service-name` (which has the highest priority). 
 * `CompositeReporter` is provided which contains the following delegates:
   - `LoggingReporter` for reporting spans to the console
   - `RemoteReporter` that contains a `UdpSender` that sends spans to `localhost:6831` 

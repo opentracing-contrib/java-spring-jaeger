@@ -58,9 +58,6 @@ public class JaegerAutoConfiguration {
   @Autowired(required = false)
   private List<TracerBuilderCustomizer> tracerCustomizers = Collections.emptyList();
 
-  @Value("${spring.application.name:unknown-spring-boot}")
-  private String serviceName;
-
   @Bean
   public io.opentracing.Tracer tracer(Sampler sampler,
                                       Reporter reporter,
@@ -68,7 +65,7 @@ public class JaegerAutoConfiguration {
                                       JaegerConfigurationProperties properties) {
 
     final JaegerTracer.Builder builder =
-        new JaegerTracer.Builder(serviceName)
+        new JaegerTracer.Builder(properties.getServiceName())
             .withReporter(reporter)
             .withSampler(sampler)
             .withTags(properties.determineTags())
@@ -187,7 +184,7 @@ public class JaegerAutoConfiguration {
       JaegerConfigurationProperties.RemoteControlledSampler samplerProperties
           = properties.getRemoteControlledSampler();
 
-      return new RemoteControlledSampler.Builder(serviceName)
+      return new RemoteControlledSampler.Builder(properties.getServiceName())
           .withSamplingManager(new HttpSamplingManager(samplerProperties.getHostPort()))
           .withInitialSampler(
               new ProbabilisticSampler(samplerProperties.getSamplingRate()))
