@@ -16,6 +16,8 @@ package io.opentracing.contrib.java.spring.jaeger.starter;
 import io.jaegertracing.Configuration;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("opentracing.jaeger")
@@ -28,10 +30,20 @@ public class JaegerConfigurationProperties {
   private final ProbabilisticSampler probabilisticSampler = new ProbabilisticSampler();
   private final RateLimitingSampler rateLimitingSampler = new RateLimitingSampler();
   private final RemoteControlledSampler remoteControlledSampler = new RemoteControlledSampler();
+
+
   /**
    * Enable Jaeger Tracer
    */
   private boolean enabled = true;
+
+  /**
+   * Service name to be used
+   * By default it will be the value of the 'spring.application.name' property name
+   * and if that is not set, it falls back to 'unknown-spring-boot'
+   */
+  @Value("${spring.application.name:unknown-spring-boot}")
+  private String serviceName;
 
   /**
    * Whether spans should be logged to the console
@@ -58,6 +70,14 @@ public class JaegerConfigurationProperties {
 
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
+  }
+
+  public String getServiceName() {
+    return serviceName;
+  }
+
+  public void setServiceName(String serviceName) {
+    this.serviceName = serviceName;
   }
 
   public boolean isLogSpans() {
