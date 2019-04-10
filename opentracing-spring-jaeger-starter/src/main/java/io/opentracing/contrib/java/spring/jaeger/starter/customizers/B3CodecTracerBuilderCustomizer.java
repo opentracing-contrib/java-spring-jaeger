@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 The OpenTracing Authors
+ * Copyright 2018-2019 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -22,9 +22,12 @@ public class B3CodecTracerBuilderCustomizer implements TracerBuilderCustomizer {
 
   @Override
   public void customize(JaegerTracer.Builder builder) {
-    B3TextMapCodec injector = new B3TextMapCodec();
+    B3TextMapCodec injector = new B3TextMapCodec.Builder().build();
 
     builder.registerInjector(Format.Builtin.HTTP_HEADERS, injector)
         .registerExtractor(Format.Builtin.HTTP_HEADERS, injector);
+
+    builder.registerInjector(Format.Builtin.TEXT_MAP, injector)
+        .registerExtractor(Format.Builtin.TEXT_MAP, injector);
   }
 }

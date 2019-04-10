@@ -1,5 +1,5 @@
 /**
- * Copyright 2018 The OpenTracing Authors
+ * Copyright 2018-2019 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -21,6 +21,7 @@ import io.opentracing.Tracer;
 import io.opentracing.contrib.java.spring.jaeger.starter.AbstractTracerSpringTest;
 import io.opentracing.contrib.java.spring.jaeger.starter.TracerBuilderCustomizer;
 import io.opentracing.propagation.Format;
+import io.opentracing.propagation.TextMap;
 import io.opentracing.propagation.TextMapExtractAdapter;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,13 +54,32 @@ public class JaegerTracerB3CustomizerCustomSpringTest extends AbstractTracerSpri
   }
 
   @Test
-  public void testCustomizersShouldContainB3Customizer() {
+  public void testCustomizersHttpHeadersShouldContainB3() {
+    TextMap textMap = createTextMap();
+
+    JaegerSpanContext context = (JaegerSpanContext) tracer.extract(Format.Builtin.HTTP_HEADERS, textMap);
+
+    assertOnB3Headers(context);
+  }
+
+  @Test
+  public void testCustomizersTextMapShouldContainB3() {
+    TextMap textMap = createTextMap();
+
+    JaegerSpanContext context = (JaegerSpanContext) tracer.extract(Format.Builtin.TEXT_MAP, textMap);
+
+    assertOnB3Headers(context);
+  }
+
+  private TextMapExtractAdapter createTextMap() {
     Map<String, String> carrier = new HashMap<>();
     carrier.put("X-B3-TraceId", "abc");
     carrier.put("X-B3-SpanId", "def");
 
-    JaegerSpanContext context = (JaegerSpanContext) tracer.extract(Format.Builtin.HTTP_HEADERS, new TextMapExtractAdapter(carrier));
+    return new TextMapExtractAdapter(carrier);
+  }
 
+  private void assertOnB3Headers(JaegerSpanContext context) {
     // Note: This test ensures that B3 codec actually works
     // If it would not, values would never be extracted from B3 headers and context will be null
     assertThat(context).isNotNull();
