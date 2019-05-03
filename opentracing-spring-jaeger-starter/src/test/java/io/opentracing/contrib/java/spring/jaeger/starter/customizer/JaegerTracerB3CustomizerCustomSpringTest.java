@@ -22,9 +22,10 @@ import io.opentracing.contrib.java.spring.jaeger.starter.AbstractTracerSpringTes
 import io.opentracing.contrib.java.spring.jaeger.starter.TracerBuilderCustomizer;
 import io.opentracing.propagation.Format;
 import io.opentracing.propagation.TextMap;
-import io.opentracing.propagation.TextMapExtractAdapter;
+import io.opentracing.propagation.TextMapAdapter;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -71,12 +72,12 @@ public class JaegerTracerB3CustomizerCustomSpringTest extends AbstractTracerSpri
     assertOnB3Headers(context);
   }
 
-  private TextMapExtractAdapter createTextMap() {
+  private TextMapAdapter createTextMap() {
     Map<String, String> carrier = new HashMap<>();
     carrier.put("X-B3-TraceId", "abc");
     carrier.put("X-B3-SpanId", "def");
 
-    return new TextMapExtractAdapter(carrier);
+    return new TextMapAdapter(carrier);
   }
 
   private void assertOnB3Headers(JaegerSpanContext context) {
