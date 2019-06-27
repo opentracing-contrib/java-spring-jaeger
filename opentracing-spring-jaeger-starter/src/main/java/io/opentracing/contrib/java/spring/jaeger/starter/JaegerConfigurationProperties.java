@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.DeprecatedConfigurationProperty;
 
 @ConfigurationProperties("opentracing.jaeger")
 public class JaegerConfigurationProperties {
@@ -341,16 +342,37 @@ public class JaegerConfigurationProperties {
      */
     private String hostPort;
 
+    private String host;
+
+    private int port = 5778;
+
     private Double samplingRate =
         io.jaegertracing.internal.samplers.ProbabilisticSampler.DEFAULT_SAMPLING_PROBABILITY;
 
 
+    @DeprecatedConfigurationProperty(replacement = "Use host + port properties instead")
     public String getHostPort() {
       return hostPort;
     }
 
     public void setHostPort(String hostPort) {
       this.hostPort = hostPort;
+    }
+
+    public int getPort() {
+      return port;
+    }
+
+    public void setPort(int port) {
+      this.port = port;
+    }
+
+    public String getHost() {
+      return host;
+    }
+
+    public void setHost(String host) {
+      this.host = host;
     }
 
     public Double getSamplingRate() {

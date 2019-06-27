@@ -184,8 +184,14 @@ public class JaegerAutoConfiguration {
       JaegerConfigurationProperties.RemoteControlledSampler samplerProperties
           = properties.getRemoteControlledSampler();
 
+      String hostPort = samplerProperties.getHostPort();
+
+      if (samplerProperties.getHost() != null && !samplerProperties.getHost().isEmpty()) {
+        hostPort = samplerProperties.getHost() + ":" + samplerProperties.getPort();
+      }
+
       return new RemoteControlledSampler.Builder(properties.getServiceName())
-          .withSamplingManager(new HttpSamplingManager(samplerProperties.getHostPort()))
+          .withSamplingManager(new HttpSamplingManager(hostPort))
           .withInitialSampler(
               new ProbabilisticSampler(samplerProperties.getSamplingRate()))
           .withMetrics(metrics)
