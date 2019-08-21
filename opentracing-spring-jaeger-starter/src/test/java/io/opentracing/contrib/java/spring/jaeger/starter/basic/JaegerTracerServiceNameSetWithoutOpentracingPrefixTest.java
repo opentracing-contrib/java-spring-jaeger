@@ -14,11 +14,11 @@
 
 package io.opentracing.contrib.java.spring.jaeger.starter.basic;
 
+import static org.assertj.core.api.Java6Assertions.assertThat;
+
 import io.opentracing.contrib.java.spring.jaeger.starter.AbstractTracerSpringTest;
 import org.junit.Test;
 import org.springframework.test.context.TestPropertySource;
-
-import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @TestPropertySource(
     properties = {
