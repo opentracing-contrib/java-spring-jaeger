@@ -40,10 +40,9 @@ public class JaegerConfigurationProperties {
 
   /**
    * Service name to be used
-   * By default it will be the value of the 'spring.application.name' property name
-   * and if that is not set, it falls back to 'unknown-spring-boot'
+   * Expect certain properties in order, falling back to 'unknown-spring-boot'.
    */
-  @Value("${spring.application.name:unknown-spring-boot}")
+  @Value("${jaeger.service-name:${spring.application.name:unknown-spring-boot}}")
   private String serviceName;
 
   /**
