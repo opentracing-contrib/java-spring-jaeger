@@ -14,29 +14,28 @@
 
 package io.opentracing.contrib.java.spring.jaeger.starter.basic;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
-
 import io.opentracing.contrib.java.spring.jaeger.starter.AbstractTracerSpringTest;
 import org.junit.Test;
 import org.springframework.test.context.TestPropertySource;
+
+import static org.assertj.core.api.Java6Assertions.assertThat;
 
 @TestPropertySource(
     properties = {
         "spring.main.banner-mode=off",
         "opentracing.jaeger.enabled=true",
-        "spring.application.name=foo",
-        "app.env=stage",
-        "jaeger.service-name=please-override",
-        "opentracing.jaeger.service-name=${spring.application.name}-${app.env}"
+        "jaeger.service-name=foo",
+        "spring.application.name=bar"
     }
 )
-public class JaegerTracerServiceNameSetExplicitWithPropsTest extends AbstractTracerSpringTest {
+public class JaegerTracerServiceNameSetWithoutOpentracingPrefixTest extends AbstractTracerSpringTest {
 
   @Test
   public void testNameIsAsExpected() {
     assertThat(tracer).isNotNull();
     assertThat(tracer).isInstanceOf(io.jaegertracing.internal.JaegerTracer.class);
 
-    assertThat((getTracer()).getServiceName()).isEqualTo("foo-stage");
+    // 'jaeger.service-name' should take priority over 'spring.application.name'
+    assertThat((getTracer()).getServiceName()).isEqualTo("foo");
   }
 }
