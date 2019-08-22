@@ -55,6 +55,11 @@ public class JaegerConfigurationProperties {
    */
   private boolean enableB3Propagation = false;
 
+  /**
+   * Enable the generation of 128 bit trace ids. Default is 64 bit.
+   */
+  private boolean enable128BitTraces = false;
+
   private boolean expandExceptionLogs = false;
 
   private Map<String, String> tags = new HashMap<>();
@@ -94,6 +99,14 @@ public class JaegerConfigurationProperties {
 
   public void setEnableB3Propagation(boolean enableB3Propagation) {
     this.enableB3Propagation = enableB3Propagation;
+  }
+
+  public boolean isEnable128BitTraces() {
+    return enable128BitTraces;
+  }
+
+  public void setEnable128BitTraces(boolean enable128BitTraces) {
+    this.enable128BitTraces = enable128BitTraces;
   }
 
   public boolean isExpandExceptionLogs() {
