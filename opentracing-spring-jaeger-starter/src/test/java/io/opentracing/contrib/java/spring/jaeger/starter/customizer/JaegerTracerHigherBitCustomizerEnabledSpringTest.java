@@ -15,36 +15,22 @@ package io.opentracing.contrib.java.spring.jaeger.starter.customizer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import io.jaegertracing.internal.JaegerTracer.Builder;
 import io.opentracing.contrib.java.spring.jaeger.starter.AbstractTracerSpringTest;
-import io.opentracing.contrib.java.spring.jaeger.starter.JaegerAutoConfiguration;
 import io.opentracing.contrib.java.spring.jaeger.starter.TracerBuilderCustomizer;
-import io.opentracing.contrib.java.spring.jaeger.starter.customizers.B3CodecTracerBuilderCustomizer;
-import io.opentracing.contrib.java.spring.jaeger.starter.customizers.ExpandExceptionLogsTracerBuilderCustomizer;
 import io.opentracing.contrib.java.spring.jaeger.starter.customizers.HigherBitTracerBuilderCustomizer;
-
 import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.TestPropertySource;
 
-@SpringBootTest(classes = {
-    MultipleCustomizersEnabledSpringTest.MockTracerConfiguration.class,
-    JaegerAutoConfiguration.class
-})
 @TestPropertySource(
     properties = {
         "spring.main.banner-mode=off",
-        "opentracing.jaeger.expand-exception-logs=true",
-        "opentracing.jaeger.enable-b3-propagation=true",
         "opentracing.jaeger.enable-128-bit-traces=true"
     }
 )
-public class MultipleCustomizersEnabledSpringTest extends AbstractTracerSpringTest {
+public class JaegerTracerHigherBitCustomizerEnabledSpringTest extends AbstractTracerSpringTest {
 
   @Autowired
   private List<TracerBuilderCustomizer> customizers;
@@ -53,27 +39,6 @@ public class MultipleCustomizersEnabledSpringTest extends AbstractTracerSpringTe
   public void testCustomizersShouldContainB3Customizer() {
     assertThat(customizers)
         .isNotEmpty()
-        .extracting("class")
-        .containsExactlyInAnyOrder(
-            ExpandExceptionLogsTracerBuilderCustomizer.class,
-            B3CodecTracerBuilderCustomizer.class,
-            HigherBitTracerBuilderCustomizer.class,
-            MockTracerBuilderCustomizer.class);
-  }
-
-  @Configuration
-  public static class MockTracerConfiguration {
-
-    @Bean
-    public TracerBuilderCustomizer mockCustomizer() {
-      return new MockTracerBuilderCustomizer();
-    }
-  }
-
-  public static class MockTracerBuilderCustomizer implements TracerBuilderCustomizer {
-
-    @Override
-    public void customize(Builder builder) {
-    }
+        .extracting("class").contains(HigherBitTracerBuilderCustomizer.class);
   }
 }

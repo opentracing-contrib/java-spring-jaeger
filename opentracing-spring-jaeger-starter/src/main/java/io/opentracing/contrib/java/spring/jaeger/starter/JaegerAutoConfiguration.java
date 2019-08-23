@@ -30,11 +30,13 @@ import io.jaegertracing.spi.Sender;
 import io.opentracing.contrib.java.spring.jaeger.starter.JaegerConfigurationProperties.RemoteReporter;
 import io.opentracing.contrib.java.spring.jaeger.starter.customizers.B3CodecTracerBuilderCustomizer;
 import io.opentracing.contrib.java.spring.jaeger.starter.customizers.ExpandExceptionLogsTracerBuilderCustomizer;
+import io.opentracing.contrib.java.spring.jaeger.starter.customizers.HigherBitTracerBuilderCustomizer;
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -79,8 +81,8 @@ public class JaegerAutoConfiguration {
   @ConditionalOnMissingBean
   @Bean
   public Reporter reporter(JaegerConfigurationProperties properties,
-      Metrics metrics,
-      @Autowired(required = false) ReporterAppender reporterAppender) {
+                           Metrics metrics,
+                           @Autowired(required = false) ReporterAppender reporterAppender) {
 
     List<Reporter> reporters = new LinkedList<>();
     RemoteReporter remoteReporter = properties.getRemoteReporter();
@@ -104,19 +106,19 @@ public class JaegerAutoConfiguration {
   }
 
   private Reporter getUdpReporter(Metrics metrics,
-      RemoteReporter remoteReporter,
-      JaegerConfigurationProperties.UdpSender udpSenderProperties) {
+                                  RemoteReporter remoteReporter,
+                                  JaegerConfigurationProperties.UdpSender udpSenderProperties) {
     io.jaegertracing.thrift.internal.senders.UdpSender udpSender =
         new io.jaegertracing.thrift.internal.senders.UdpSender(
-          udpSenderProperties.getHost(), udpSenderProperties.getPort(),
-          udpSenderProperties.getMaxPacketSize());
+            udpSenderProperties.getHost(), udpSenderProperties.getPort(),
+            udpSenderProperties.getMaxPacketSize());
 
     return createReporter(metrics, remoteReporter, udpSender);
   }
 
   private Reporter getHttpReporter(Metrics metrics,
-      RemoteReporter remoteReporter,
-      JaegerConfigurationProperties.HttpSender httpSenderProperties) {
+                                   RemoteReporter remoteReporter,
+                                   JaegerConfigurationProperties.HttpSender httpSenderProperties) {
     io.jaegertracing.thrift.internal.senders.HttpSender.Builder builder =
         new io.jaegertracing.thrift.internal.senders.HttpSender.Builder(httpSenderProperties.getUrl());
     if (httpSenderProperties.getMaxPayload() != null) {
@@ -133,7 +135,7 @@ public class JaegerAutoConfiguration {
   }
 
   private Reporter createReporter(Metrics metrics,
-      RemoteReporter remoteReporter, Sender udpSender) {
+                                  RemoteReporter remoteReporter, Sender udpSender) {
     io.jaegertracing.internal.reporters.RemoteReporter.Builder builder =
         new io.jaegertracing.internal.reporters.RemoteReporter.Builder()
             .withSender(udpSender)
@@ -209,6 +211,15 @@ public class JaegerAutoConfiguration {
     @Bean
     public TracerBuilderCustomizer b3CodecJaegerTracerCustomizer() {
       return new B3CodecTracerBuilderCustomizer();
+    }
+  }
+
+  @Configuration
+  @ConditionalOnProperty(value = "opentracing.jaeger.enable-128-bit-traces")
+  public static class HigherBitTraceConfiguration {
+    @Bean
+    public TracerBuilderCustomizer higherBitJaegerTracerCustomizer() {
+      return new HigherBitTracerBuilderCustomizer();
     }
   }
 
