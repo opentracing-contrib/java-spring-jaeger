@@ -1,2 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-io.opentracing.contrib.java.spring.jaeger.starter.JaegerAutoConfiguration
+io.opentracing.contrib.java.spring.jaeger.starter.JaegerAutoConfiguration,\
+io.opentracing.contrib.java.spring.jaeger.starter.log.slf4j.Slf4jJaegerAutoConfiguration
+
+# Environment Post Processor
+org.springframework.boot.env.EnvironmentPostProcessor=\
+io.opentracing.contrib.java.spring.jaeger.starter.log.slf4j.TraceEnvironmentPostProcessor
