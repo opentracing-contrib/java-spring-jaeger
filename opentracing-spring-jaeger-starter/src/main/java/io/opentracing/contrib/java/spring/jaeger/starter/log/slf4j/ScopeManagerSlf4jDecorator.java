@@ -32,7 +32,7 @@ public class ScopeManagerSlf4jDecorator implements ScopeManager {
   private static final String B3_TRACE_ID = "X-B3-TraceId";
   private static final String B3_SPAN_ID = "X-B3-SpanId";
   private static final String B3_SAMPLED = "X-B3-Sampled";
-  private static final String B3_Export = "X-Span-Export";
+  private static final String B3_EXPORT = "X-Span-Export";
   private static final String OPENTRACING_TRACE_ID = "ToTraceId";
   private static final String OPENTRACING_SPAN_ID = "ToSpanId";
   private static final String SAMPLED = "Sampled";
@@ -47,10 +47,7 @@ public class ScopeManagerSlf4jDecorator implements ScopeManager {
 
   @Override
   public Scope activate(Span span) {
-    Map<String, String> currentContext = currentContext(span);
-    for (Map.Entry<String, String> entry : currentContext.entrySet()) {
-      MDC.put(entry.getKey(), entry.getValue());
-    }
+    Map<String, String> currentContext = addSpanToMDC(span);
     Scope scope = scopeManager.activate(span);
 
     return new ScopeSlf4jDecorator(scope, currentContext);
@@ -59,7 +56,10 @@ public class ScopeManagerSlf4jDecorator implements ScopeManager {
   @Override
   @Deprecated
   public Scope activate(Span span, boolean finishSpanOnClose) {
-    return scopeManager.activate(span, finishSpanOnClose);
+    Map<String, String> currentContext = addSpanToMDC(span);
+    Scope scope = scopeManager.activate(span, finishSpanOnClose);
+
+    return new ScopeSlf4jDecorator(scope, currentContext);
   }
 
   @Override
@@ -73,7 +73,7 @@ public class ScopeManagerSlf4jDecorator implements ScopeManager {
     return scopeManager.activeSpan();
   }
 
-  private Map<String, String> currentContext(Span span) {
+  private Map<String, String> addSpanToMDC(Span span) {
     JaegerSpanContext context = (JaegerSpanContext) span.context();
     Map<String, String> currentContext = new HashMap<>();
     currentContext.put(OPENTRACING_TRACE_ID, context.toTraceId());
@@ -84,7 +84,11 @@ public class ScopeManagerSlf4jDecorator implements ScopeManager {
       currentContext.put(B3_TRACE_ID, context.toTraceId());
       currentContext.put(B3_SPAN_ID, context.toSpanId());
       currentContext.put(B3_SAMPLED, String.valueOf(context.isSampled()));
-      currentContext.put(B3_Export, String.valueOf(context.isSampled()));
+      currentContext.put(B3_EXPORT, String.valueOf(context.isSampled()));
+    }
+
+    for (Map.Entry<String, String> entry : currentContext.entrySet()) {
+      MDC.put(entry.getKey(), entry.getValue());
     }
 
     return currentContext;

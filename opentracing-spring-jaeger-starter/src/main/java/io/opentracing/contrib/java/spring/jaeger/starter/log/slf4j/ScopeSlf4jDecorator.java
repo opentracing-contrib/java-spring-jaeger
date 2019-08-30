@@ -25,18 +25,18 @@ import org.slf4j.MDC;
  */
 public class ScopeSlf4jDecorator implements Scope {
   private Scope scope;
-  private Map<String, String> previous;
+  private Map<String, String> previousContext;
 
-  public ScopeSlf4jDecorator(Scope scope, Map previous) {
+  public ScopeSlf4jDecorator(Scope scope, Map previousContext) {
     this.scope = scope;
-    this.previous = previous;
+    this.previousContext = previousContext;
   }
 
   @Override
   public void close() {
     scope.close();
 
-    for (Map.Entry<String, String> entry : previous.entrySet()) {
+    for (Map.Entry<String, String> entry : previousContext.entrySet()) {
       MDC.put(entry.getKey(), entry.getValue());
     }
   }
