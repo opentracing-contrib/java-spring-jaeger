@@ -133,7 +133,7 @@ having to forgo what the auto-configuration provides
 
   `opentracing.jaeger.rate-limiting-sampler.max-traces-per-second = value` 
   
-  Where `value` is between `0.0` (no sampling) and `1.0` (sampling of every request)
+  Configures that traces are sampled with a certain constant rate. For example, when sampler.param=2.0 it will sample requests with the rate of 2 traces per second.
   
   
 The samplers above are mutually exclusive.
