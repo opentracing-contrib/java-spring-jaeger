@@ -210,6 +210,17 @@ In the code above we are activating a `io.opentracing.Tracer` iff `opentracing.j
 is necessary to keep the various Spring configurations happy but has been configured to not sample any requests, therefore
 effectively disabling tracing.
 
+### Trace id not being forwarded
+
+In some cases it might be necessary to explicitely expose the Feign client in the Spring configuration. This can be done easily by adding the following into one of your configuration classes:
+
+```
+@Bean
+public Client feignClient() {
+    return new Client.Default(null, null);
+}
+```
+
 ## Release
 Follow instructions in [RELEASE](RELEASE.md)
 
