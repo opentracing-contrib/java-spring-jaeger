@@ -210,9 +210,9 @@ In the code above we are activating a `io.opentracing.Tracer` iff `opentracing.j
 is necessary to keep the various Spring configurations happy but has been configured to not sample any requests, therefore
 effectively disabling tracing.
 
-### Trace id not being forwarded
+### Trace id not propagated via the Feign client 
 
-In some cases it might be necessary to explicitely expose the Feign client in the Spring configuration. This can be done easily by adding the following into one of your configuration classes:
+If you are using Feign, in some cases it might be necessary to explicitely expose the Feign client in the Spring configuration, in order to get the `uber-trace-id` propagated. This can be done easily by adding the following into one of your configuration classes:
 
 ```
 @Bean
