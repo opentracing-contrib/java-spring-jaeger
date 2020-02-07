@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2018-2019 The OpenTracing Authors
+    Copyright 2018-2020 The OpenTracing Authors
 
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
     in compliance with the License. You may obtain a copy of the License at
@@ -66,7 +66,7 @@
     <version.io.opentracing>0.32.0</version.io.opentracing>
     <version.io.opentracing.contrib-opentracing-spring-tracer>0.2.0</version.io.opentracing.contrib-opentracing-spring-tracer>
     <version.org.springframework.boot>2.1.4.RELEASE</version.org.springframework.boot>
-    <version.jaeger>0.35.1</version.jaeger>
+    <version.jaeger>1.1.0</version.jaeger>
     <version.org.awaitility-awaitility>3.0.0</version.org.awaitility-awaitility>
     <version.test-containers>1.7.3</version.test-containers>
 
