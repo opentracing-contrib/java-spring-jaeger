@@ -194,12 +194,7 @@ public class MyTracerConfiguration {
 
     @Bean
     public io.opentracing.Tracer jaegerTracer() {
-         final Reporter reporter = new InMemoryReporter();
-         final Sampler sampler = new ConstSampler(false);
-         return new JaegerTracer.Builder("untraced-service")
-                    .withReporter(reporter)
-                    .withSampler(sampler)
-                    .build();
+        return io.opentracing.noop.NoopTracerFactory.create()
         }
     }
 
