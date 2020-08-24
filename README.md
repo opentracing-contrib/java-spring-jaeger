@@ -108,7 +108,7 @@ Set `spring.application.name` to the desired name
 
 ### Log Spans
 
-Be default spans are logged to the console. This can be disabled by setting:
+By default spans are logged to the console. This can be disabled by setting:
 
 `opentracing.jaeger.log-spans = false`
 
