@@ -193,8 +193,8 @@ One simple way around this would be to do the add the following Spring configura
 public class MyTracerConfiguration {
 
     @Bean
-    public io.opentracing.Tracer jaegerTracer() {
-        return io.opentracing.noop.NoopTracerFactory.create()
+    public io.opentracing.Tracer noopTracer() {
+        return io.opentracing.noop.NoopTracerFactory.create();
         }
     }
 
