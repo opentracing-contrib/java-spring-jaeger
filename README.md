@@ -144,6 +144,10 @@ A custom sampler could of course be provided by declaring a bean of type `io.jae
 
 `opentracing.jaeger.enable-b3-propagation = true`
 
+### Propagate headers in W3C Trace Context format
+
+`opentracing.jaeger.enable-w3c-propagation = true`
+
 ## Advanced cases
 
 ### Manual bean provisioning
@@ -194,10 +198,8 @@ public class MyTracerConfiguration {
 
     @Bean
     public io.opentracing.Tracer jaegerTracer() {
-        return io.opentracing.noop.NoopTracerFactory.create()
-        }
+        return io.opentracing.noop.NoopTracerFactory.create();
     }
-
 }
 ```
 
