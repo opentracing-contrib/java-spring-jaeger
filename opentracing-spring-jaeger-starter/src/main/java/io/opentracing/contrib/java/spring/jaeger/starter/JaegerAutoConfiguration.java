@@ -32,7 +32,6 @@ import io.opentracing.contrib.java.spring.jaeger.starter.customizers.B3CodecTrac
 import io.opentracing.contrib.java.spring.jaeger.starter.customizers.ExpandExceptionLogsTracerBuilderCustomizer;
 import io.opentracing.contrib.java.spring.jaeger.starter.customizers.HigherBitTracerBuilderCustomizer;
 
-import io.opentracing.contrib.java.spring.jaeger.starter.customizers.TraceContextCodecTracerBuilderCustomizer;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -212,16 +211,6 @@ public class JaegerAutoConfiguration {
     @Bean
     public TracerBuilderCustomizer b3CodecJaegerTracerCustomizer() {
       return new B3CodecTracerBuilderCustomizer();
-    }
-  }
-
-  @Configuration
-  @ConditionalOnProperty(value = "opentracing.jaeger.enable-w3c-propagation")
-  public static class TraceContextCodecConfiguration {
-
-    @Bean
-    public TracerBuilderCustomizer traceContextCodecJaegerTracerCustomizer() {
-      return new TraceContextCodecTracerBuilderCustomizer();
     }
   }
 
