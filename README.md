@@ -135,6 +135,13 @@ having to forgo what the auto-configuration provides
   
   Configures that traces are sampled with a certain constant rate. For example, when sampler.param=2.0 it will sample requests with the rate of 2 traces per second.
   
+* Remote sampler
+
+  Remote sampler consults Jaeger agent for the appropriate sampling strategy to use in the current service. This allows controlling the sampling strategies in the services from a central configuration in Jaeger backend.
+  It can be configured like so:
+  
+  `opentracing.jaeger.remote-controlled-sampler.host-port=localhost:5778`
+  
   
 The samplers above are mutually exclusive.
 
