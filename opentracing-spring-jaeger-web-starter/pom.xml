@@ -27,7 +27,6 @@
 
     <properties>
       <main.basedir>${project.basedir}/..</main.basedir>
-      <opentracing-spring-web-starter.version>4.0.0</opentracing-spring-web-starter.version>
     </properties>
 
     <dependencies>
@@ -39,7 +38,6 @@
         <dependency>
             <groupId>io.opentracing.contrib</groupId>
             <artifactId>opentracing-spring-web-starter</artifactId>
-            <version>${opentracing-spring-web-starter.version}</version>
         </dependency>
     </dependencies>
 
