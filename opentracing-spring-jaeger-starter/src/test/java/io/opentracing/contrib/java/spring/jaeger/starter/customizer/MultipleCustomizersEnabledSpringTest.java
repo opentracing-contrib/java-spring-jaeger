@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 The OpenTracing Authors
+ * Copyright 2018-2021 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -23,6 +23,7 @@ import io.opentracing.contrib.java.spring.jaeger.starter.customizers.B3CodecTrac
 import io.opentracing.contrib.java.spring.jaeger.starter.customizers.ExpandExceptionLogsTracerBuilderCustomizer;
 import io.opentracing.contrib.java.spring.jaeger.starter.customizers.HigherBitTracerBuilderCustomizer;
 
+import io.opentracing.contrib.java.spring.jaeger.starter.customizers.TraceContextCodecTracerBuilderCustomizer;
 import java.util.List;
 
 import org.junit.Test;
@@ -41,6 +42,7 @@ import org.springframework.test.context.TestPropertySource;
         "spring.main.banner-mode=off",
         "opentracing.jaeger.expand-exception-logs=true",
         "opentracing.jaeger.enable-b3-propagation=true",
+        "opentracing.jaeger.enable-w3c-propagation=true",
         "opentracing.jaeger.enable-128-bit-traces=true"
     }
 )
@@ -57,6 +59,7 @@ public class MultipleCustomizersEnabledSpringTest extends AbstractTracerSpringTe
         .containsExactlyInAnyOrder(
             ExpandExceptionLogsTracerBuilderCustomizer.class,
             B3CodecTracerBuilderCustomizer.class,
+            TraceContextCodecTracerBuilderCustomizer.class,
             HigherBitTracerBuilderCustomizer.class,
             MockTracerBuilderCustomizer.class);
   }
