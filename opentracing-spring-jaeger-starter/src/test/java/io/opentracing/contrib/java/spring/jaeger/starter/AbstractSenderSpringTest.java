@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2020 The OpenTracing Authors
+ * Copyright 2018-2021 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -21,31 +21,30 @@ import io.jaegertracing.internal.reporters.RemoteReporter;
 import io.jaegertracing.spi.Reporter;
 import org.assertj.core.api.Condition;
 import org.assertj.core.api.InstanceOfAssertFactories;
-import org.assertj.core.api.InstanceOfAssertFactory;
 
 public abstract class AbstractSenderSpringTest extends AbstractTracerSpringTest {
 
   protected void assertSenderClass(Class senderClass) {
     assertThat(getTracer())
-        .extracting("reporter")
-        .extracting("class", as(InstanceOfAssertFactories.CLASS))
-        .isEqualTo(CompositeReporter.class);
+            .extracting("reporter")
+            .extracting("class", as(InstanceOfAssertFactories.CLASS))
+            .isEqualTo(CompositeReporter.class);
 
     assertThat(getTracer())
-        .extracting("reporter").isInstanceOfSatisfying(CompositeReporter.class, c -> {
-          assertThat(c)
-              .extracting("reporters", as(InstanceOfAssertFactories.list(Reporter.class)))
-              .filteredOn(new Condition<Object>() {
-                  @Override
-                  public boolean matches(Object value) {
-                    return value.getClass().equals(RemoteReporter.class);
-                  }
-              }).allSatisfy(rr -> {
-                assertThat(rr)
+            .extracting("reporter").isInstanceOfSatisfying(CompositeReporter.class, c -> {
+              assertThat(c)
+                  .extracting("reporters", as(InstanceOfAssertFactories.list(Reporter.class)))
+                  .filteredOn(new Condition<Object>() {
+                    @Override
+                    public boolean matches(Object value) {
+                        return value.getClass().equals(RemoteReporter.class);
+                    }
+                    }).allSatisfy(rr -> {
+                      assertThat(rr)
                         .extracting("sender")
                         .extracting("class", as(InstanceOfAssertFactories.CLASS))
                         .isEqualTo(senderClass);
-              });
-        });
+                    });
+            });
   }
 }
