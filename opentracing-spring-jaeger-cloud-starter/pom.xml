@@ -27,7 +27,7 @@
 
   <properties>
     <main.basedir>${project.basedir}/..</main.basedir>
-    <opentracing-spring-cloud-starter.version>0.5.3</opentracing-spring-cloud-starter.version>
+    <opentracing-spring-cloud-starter.version>0.5.9</opentracing-spring-cloud-starter.version>
   </properties>
 
   <dependencies>
