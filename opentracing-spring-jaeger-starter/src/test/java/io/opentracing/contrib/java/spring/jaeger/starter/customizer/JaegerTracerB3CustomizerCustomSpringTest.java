@@ -1,5 +1,5 @@
 /**
- * Copyright 2018-2019 The OpenTracing Authors
+ * Copyright 2018-2021 The OpenTracing Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -84,7 +84,7 @@ public class JaegerTracerB3CustomizerCustomSpringTest extends AbstractTracerSpri
     // Note: This test ensures that B3 codec actually works
     // If it would not, values would never be extracted from B3 headers and context will be null
     assertThat(context).isNotNull();
-    assertThat(context.getTraceId()).isEqualTo("abc");
+    assertThat(context.getTraceId()).isEqualTo("0000000000000abc");
     assertThat(context.getSpanId()).isEqualTo(3567L);
   }
 }
