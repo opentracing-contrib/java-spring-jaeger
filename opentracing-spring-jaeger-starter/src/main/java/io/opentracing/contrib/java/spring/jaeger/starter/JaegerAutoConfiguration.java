@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.thrift.transport.TTransportException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -83,7 +84,7 @@ public class JaegerAutoConfiguration {
   @Bean
   public Reporter reporter(JaegerConfigurationProperties properties,
                            Metrics metrics,
-                           @Autowired(required = false) ReporterAppender reporterAppender) {
+                           @Autowired(required = false) ReporterAppender reporterAppender) throws TTransportException {
 
     List<Reporter> reporters = new LinkedList<>();
     RemoteReporter remoteReporter = properties.getRemoteReporter();
@@ -108,7 +109,7 @@ public class JaegerAutoConfiguration {
 
   private Reporter getUdpReporter(Metrics metrics,
                                   RemoteReporter remoteReporter,
-                                  JaegerConfigurationProperties.UdpSender udpSenderProperties) {
+                                  JaegerConfigurationProperties.UdpSender udpSenderProperties) throws TTransportException {
     io.jaegertracing.thrift.internal.senders.UdpSender udpSender =
         new io.jaegertracing.thrift.internal.senders.UdpSender(
             udpSenderProperties.getHost(), udpSenderProperties.getPort(),
@@ -119,7 +120,7 @@ public class JaegerAutoConfiguration {
 
   private Reporter getHttpReporter(Metrics metrics,
                                    RemoteReporter remoteReporter,
-                                   JaegerConfigurationProperties.HttpSender httpSenderProperties) {
+                                   JaegerConfigurationProperties.HttpSender httpSenderProperties) throws TTransportException {
     io.jaegertracing.thrift.internal.senders.HttpSender.Builder builder =
         new io.jaegertracing.thrift.internal.senders.HttpSender.Builder(httpSenderProperties.getUrl());
     if (httpSenderProperties.getMaxPayload() != null) {
