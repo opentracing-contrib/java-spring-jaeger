@@ -210,7 +210,7 @@ public class MyTracerConfiguration {
 }
 ```
 
-In the code above we are activating a `io.opentracing.Tracer` iff `opentracing.jaeger.enabled` is set to `false`. This tracer
+In the code above we are activating a `io.opentracing.Tracer` if `opentracing.jaeger.enabled` is set to `false`. This tracer
 is necessary to keep the various Spring configurations happy but has been configured to not sample any requests, therefore
 effectively disabling tracing.
 
